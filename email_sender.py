@@ -15,7 +15,7 @@ def read_email_data(filename="email_data.csv"):
     return email_data
 
 
-def send_email(receiver_email, sender_email="kdleo93@gmail.com"):
+def send_email(email_data, sender_email="kdleo93@gmail.com"):
     password = getpass("Type your password and hit enter: ")
 
     # Create email headers and body
@@ -37,7 +37,7 @@ def send_email(receiver_email, sender_email="kdleo93@gmail.com"):
         server = smtplib.SMTP_SSL(smtp_server, port, context=context)
         server.login(sender_email, password)
         server.sendmail(
-            sender_email, email_data["recipiebnt_email"], message.as_string())
+            sender_email, email_data["recipient_email"], message.as_string())
     except Exception as e:
         print(e)
     finally:
@@ -47,4 +47,4 @@ def send_email(receiver_email, sender_email="kdleo93@gmail.com"):
 def send_multi_emails(filename="email_data.csv"):
     email_data = read_email_data(filename)
     for data in email_data:
-        send_email(email_data)
+        send_email(email_data=data)
