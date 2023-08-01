@@ -1,19 +1,29 @@
 import smtplib
 import ssl
+import csv
 from getpass import getpass
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 
-def send_email(receiver_email, subject, body, sender_email="kdleo93@gmail.com"):
+def read_email_data(filename="email_data.csv"):
+    email_data = []
+    with open(filename, "r") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            email_data.append(row)
+    return email_data
+
+
+def send_email(receiver_email, sender_email="kdleo93@gmail.com"):
     password = getpass("Type your password and hit enter: ")
 
     # Create email headers and body
     message = MIMEMultipart()
     message["From"] = sender_email
-    message["To"] = receiver_email
-    message["Subject"] = subject
-    message.attach(MIMEText(body, "plain"))
+    message["To"] = email_data["recipient_email"]
+    message["Subject"] = email_data["subject"]
+    message.attach(MIMEText(email_data["body"], "plain"))
 
     # Set up the SMTP server and port
     smtp_server = "smtp.gmail.com"
@@ -26,8 +36,15 @@ def send_email(receiver_email, subject, body, sender_email="kdleo93@gmail.com"):
     try:
         server = smtplib.SMTP_SSL(smtp_server, port, context=context)
         server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message.as_string())
+        server.sendmail(
+            sender_email, email_data["recipiebnt_email"], message.as_string())
     except Exception as e:
         print(e)
     finally:
         server.quit()
+
+
+def send_multi_emails(filename="email_data.csv"):
+    email_data = read_email_data(filename)
+    for data in email_data:
+        send_email(email_data)
