@@ -1,9 +1,8 @@
-from email_sender import send_multi_emails
+from email_sender import email_schedule
 
 
 def main():
-    # call the send_multi_emails function
-    send_multi_emails()
+    email_schedule(1)  # send emails every min
 
 
 if __name__ == "__main__":
