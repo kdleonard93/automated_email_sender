@@ -12,6 +12,10 @@ SENDER_EMAIL = environ.get("SENDER_EMAIL")
 SMTP_SERVER = environ.get("SMTP_SERVER")  # Set up the SMTP server and port
 SMTP_PORT = int(environ.get("SMTP_PORT, 465"))  # For SSL
 
+# Check if necessary environment variables are set
+if not (PASSWORD and SENDER_EMAIL and SMTP_SERVER):
+    raise EnvironmentError("Required environment variables are missing!")
+
 
 def read_email_data(filename="email_data.csv"):
     email_data = []
@@ -22,10 +26,10 @@ def read_email_data(filename="email_data.csv"):
     return email_data
 
 
-def send_email(email_data, SENDER_EMAIL):
+def send_email(email_data, sender_email=SENDER_EMAIL):
     # Create email headers and body
     message = MIMEMultipart()
-    message["From"] = SENDER_EMAIL
+    message["From"] = sender_email
     message["To"] = email_data["recipient_email"]
     message["Subject"] = email_data["subject"]
     message.attach(MIMEText(email_data["body"], "plain"))
@@ -36,9 +40,9 @@ def send_email(email_data, SENDER_EMAIL):
     # Try to log in to the server and send the email
     try:
         server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context)
-        server.login(SENDER_EMAIL, PASSWORD)
+        server.login(sender_email, PASSWORD)
         server.sendmail(
-            SENDER_EMAIL, email_data["recipient_email"], message.as_string())
+            sender_email, email_data["recipient_email"], message.as_string())
     except Exception as e:
         print(f"An error occurred while sending the email: {e}")
     finally:

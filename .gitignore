@@ -1,2 +1,3 @@
 .env
 email_data.csv
+venv/
