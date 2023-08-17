@@ -19,13 +19,13 @@ def read_email_data(filename="email_data.csv"):
     return email_data
 
 
-def send_email(data, sender_email="kdleo93@gmail.com"):
+def send_email(email_data, sender_email="kdleo93@gmail.com"):
     # Create email headers and body
     message = MIMEMultipart()
     message["From"] = sender_email
-    message["To"] = data["recipient_email"]
-    message["Subject"] = data["subject"]
-    message.attach(MIMEText(data["body"], "plain"))
+    message["To"] = email_data["recipient_email"]
+    message["Subject"] = email_data["subject"]
+    message.attach(MIMEText(email_data["body"], "plain"))
 
     # Set up the SMTP server and port
     smtp_server = "smtp.gmail.com"
@@ -39,7 +39,7 @@ def send_email(data, sender_email="kdleo93@gmail.com"):
         server = smtplib.SMTP_SSL(smtp_server, port, context=context)
         server.login(sender_email, PASSWORD)
         server.sendmail(
-            sender_email, data["recipient_email"], message.as_string())
+            sender_email, email_data["recipient_email"], message.as_string())
     except Exception as e:
         print(f"An error occurred while sending the email: {e}")
     finally:
