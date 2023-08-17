@@ -8,6 +8,13 @@ import time
 from os import environ
 
 PASSWORD = environ.get("EMAIL_PASSWORD")
+SENDER_EMAIL = environ.get("SENDER_EMAIL")
+SMTP_SERVER = environ.get("SMTP_SERVER")  # Set up the SMTP server and port
+SMTP_PORT = int(environ.get("SMTP_PORT, 465"))  # For SSL
+
+# Check if necessary environment variables are set
+if not (PASSWORD and SENDER_EMAIL and SMTP_SERVER):
+    raise EnvironmentError("Required environment variables are missing!")
 
 
 def read_email_data(filename="email_data.csv"):
@@ -19,7 +26,7 @@ def read_email_data(filename="email_data.csv"):
     return email_data
 
 
-def send_email(email_data, sender_email="kdleo93@gmail.com"):
+def send_email(email_data, sender_email=SENDER_EMAIL):
     # Create email headers and body
     message = MIMEMultipart()
     message["From"] = sender_email
@@ -27,16 +34,12 @@ def send_email(email_data, sender_email="kdleo93@gmail.com"):
     message["Subject"] = email_data["subject"]
     message.attach(MIMEText(email_data["body"], "plain"))
 
-    # Set up the SMTP server and port
-    smtp_server = "smtp.gmail.com"
-    port = 465  # For SSL
-
     # Create a secure SSL context
     context = ssl.create_default_context()
 
     # Try to log in to the server and send the email
     try:
-        server = smtplib.SMTP_SSL(smtp_server, port, context=context)
+        server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context)
         server.login(sender_email, PASSWORD)
         server.sendmail(
             sender_email, email_data["recipient_email"], message.as_string())
