@@ -1,9 +1,13 @@
 import smtplib
 import ssl
 import csv
-from getpass import getpass
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import schedule
+import time
+from os import environ
+
+PASSWORD = environ.get("EMAIL_PASSWORD")
 
 
 def read_email_data(filename="email_data.csv"):
@@ -16,8 +20,6 @@ def read_email_data(filename="email_data.csv"):
 
 
 def send_email(email_data, sender_email="kdleo93@gmail.com"):
-    password = getpass("Type your password and hit enter: ")
-
     # Create email headers and body
     message = MIMEMultipart()
     message["From"] = sender_email
@@ -35,16 +37,29 @@ def send_email(email_data, sender_email="kdleo93@gmail.com"):
     # Try to log in to the server and send the email
     try:
         server = smtplib.SMTP_SSL(smtp_server, port, context=context)
-        server.login(sender_email, password)
+        server.login(sender_email, PASSWORD)
         server.sendmail(
             sender_email, email_data["recipient_email"], message.as_string())
     except Exception as e:
-        print(e)
+        print(f"An error occurred while sending the email: {e}")
     finally:
         server.quit()
 
 
 def send_multi_emails(filename="email_data.csv"):
-    email_data = read_email_data(filename)
-    for data in email_data:
+    email_data_list = read_email_data(filename)
+    for data in email_data_list:
         send_email(email_data=data)
+
+
+def job():
+    """Define the job to be executed at a scheduled time."""
+    send_multi_emails()
+
+
+def email_schedule(interval):
+    """Schedules the email sending job."""
+    schedule.every(interval).minutes.do(job)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
