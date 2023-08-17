@@ -6,11 +6,14 @@ from email.mime.multipart import MIMEMultipart
 import schedule
 import time
 from os import environ
+from dotenv import load_dotenv
+
+load_dotenv()  # This will load environment variables from a .env file.
 
 PASSWORD = environ.get("EMAIL_PASSWORD")
 SENDER_EMAIL = environ.get("SENDER_EMAIL")
 SMTP_SERVER = environ.get("SMTP_SERVER")  # Set up the SMTP server and port
-SMTP_PORT = int(environ.get("SMTP_PORT, 465"))  # For SSL
+SMTP_PORT = int(environ.get("SMTP_PORT", 465))  # For SSL
 
 # Check if necessary environment variables are set
 if not (PASSWORD and SENDER_EMAIL and SMTP_SERVER):
