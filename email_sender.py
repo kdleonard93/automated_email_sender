@@ -8,6 +8,9 @@ import time
 from os import environ
 
 PASSWORD = environ.get("EMAIL_PASSWORD")
+SENDER_EMAIL = environ.get("SENDER_EMAIL")
+SMTP_SERVER = environ.get("SMTP_SERVER")  # Set up the SMTP server and port
+SMTP_PORT = int(environ.get("SMTP_PORT, 465"))  # For SSL
 
 
 def read_email_data(filename="email_data.csv"):
@@ -19,27 +22,23 @@ def read_email_data(filename="email_data.csv"):
     return email_data
 
 
-def send_email(email_data, sender_email="kdleo93@gmail.com"):
+def send_email(email_data, SENDER_EMAIL):
     # Create email headers and body
     message = MIMEMultipart()
-    message["From"] = sender_email
+    message["From"] = SENDER_EMAIL
     message["To"] = email_data["recipient_email"]
     message["Subject"] = email_data["subject"]
     message.attach(MIMEText(email_data["body"], "plain"))
-
-    # Set up the SMTP server and port
-    smtp_server = "smtp.gmail.com"
-    port = 465  # For SSL
 
     # Create a secure SSL context
     context = ssl.create_default_context()
 
     # Try to log in to the server and send the email
     try:
-        server = smtplib.SMTP_SSL(smtp_server, port, context=context)
-        server.login(sender_email, PASSWORD)
+        server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context)
+        server.login(SENDER_EMAIL, PASSWORD)
         server.sendmail(
-            sender_email, email_data["recipient_email"], message.as_string())
+            SENDER_EMAIL, email_data["recipient_email"], message.as_string())
     except Exception as e:
         print(f"An error occurred while sending the email: {e}")
     finally:

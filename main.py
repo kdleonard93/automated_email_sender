@@ -1,4 +1,7 @@
 from email_sender import email_schedule
+from dotenv import load_dotenv
+
+load_dotenv()  # This will load environment variables from a .env file.
 
 
 def main():
