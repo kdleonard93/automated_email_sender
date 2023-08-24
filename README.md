@@ -75,7 +75,7 @@ Automated Email Sender is a Python-based application designed to automate the pr
 ### **Configuration**
 
 1. Populate `email_data.csv` with recipient email addresses, subjects, and body texts.
-2. Create a `.env` file to store environment variables. (See [**Environment Variables**](https://chat.openai.com/c/da875d12-1b74-4244-aec1-801cde1b1ae6#environment-variables))
+2. Create a `.env` file to store environment variables. (See [**Environment Variables**])
 
 ### **Environment Variables**
 
