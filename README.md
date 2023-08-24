@@ -81,8 +81,8 @@ Automated Email Sender is a Python-based application designed to automate the pr
 
 Create a `.env` file in the root directory and add the following variables:
 
-```python
-makefileCopy codeEMAIL_PASSWORD=YourEmailPassword
+```bash
+EMAIL_PASSWORD=YourEmailPassword
 SENDER_EMAIL=YourSenderEmail
 SMTP_SERVER=YourSMTPServer
 SMTP_PORT=YourSMTPPort
@@ -92,8 +92,8 @@ SMTP_PORT=YourSMTPPort
 
 To run the application:
 
-```python
-cssCopy codepython main.py
+```bash
+python main.py
 ```
 
 ## **Scheduling**
@@ -108,8 +108,8 @@ The application logs all the email sending activity. You can find the log file a
 
 See the `tests` folder for testing scripts. To run tests, execute:
 
-```python
-Copy codepython -m unittest discover tests
+```bash
+python -m unittest discover tests
 ```
 
 ## **Contributing**
