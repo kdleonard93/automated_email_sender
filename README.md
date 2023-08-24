@@ -2,20 +2,21 @@
 
 ## **Table of Contents**
 
-- [**Overview**](#overview)
-- [**Features**](#features)
-- [**Prerequisites**](#prerequisites)
-- [**Installation**](#installation)
-- [**Usage**](#usage)
-  - [**Configuration**](#configuration)
-  - [**Environment Variables**](#environment-variables)
-  - [**Running the Application**](#running-the-application)
-- [**Scheduling**](#scheduling)
-- [**Logging**](#logging)
-- [**Testing**](#testing)
-- [**Contributing**](#contributing)
-- [**License**](#license)
-- [**Acknowledgements**](#acknowledgements)
+- [**Automated Email Sender 💌**](#automated-email-sender-)
+  - [**Table of Contents**](#table-of-contents)
+  - [**Overview**](#overview)
+  - [**Features**](#features)
+  - [**Prerequisites**](#prerequisites)
+  - [**Usage**](#usage)
+    - [**Configuration**](#configuration)
+    - [**Environment Variables**](#environment-variables)
+    - [**Running the Application**](#running-the-application)
+  - [**Scheduling**](#scheduling)
+  - [**Logging**](#logging)
+  - [**Testing**](#testing)
+  - [**Contributing**](#contributing)
+  - [**License**](#license)
+  - [**Acknowledgements**](#acknowledgements)
 
 ## **Overview**
 
@@ -34,41 +35,39 @@ Automated Email Sender is a Python-based application designed to automate the pr
 - pip
 - Virtualenv (optional but recommended)
 
-## **Installation**
-
 1. **Clone the Repository**
 
-   ```python
-   bashCopy codegit clone https://github.com/YourUsername/automated_email_sender.git
+   ```bash
+   git clone https://github.com/YourUsername/automated_email_sender.git
    ```
 
 2. **Navigate to the Project Directory**
 
-   ```python
-   bashCopy codecd automated_email_sender
+   ```bash
+   cd automated_email_sender
    ```
 
 3. **Create a Virtual Environment (Optional)**
 
-   ```python
-   Copy codevirtualenv venv
+   ```bash
+   virtualenv venv
    ```
 
 4. **Activate the Virtual Environment**
 
    - On Windows:
-     ```python
-     Copy code.\venv\Scripts\activate
+     ```bash
+     .\venv\Scripts\activate
      ```
    - On macOS and Linux:
-     ```python
-     bashCopy codesource venv/bin/activate
+     ```bash
+     source venv/bin/activate
      ```
 
 5. **Install Required Packages**
 
-   ```python
-   Copy codepip install -r requirements.txt
+   ```bash
+   pip install -r requirements.txt
    ```
 
 ## **Usage**
