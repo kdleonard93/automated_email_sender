@@ -1,6 +1,6 @@
-[**Automated Email Sender 💌**](#automated-email-sender-)
+# **Automated Email Sender 💌**
 
-[**Table of Contents**](#table-of-contents)
+## **Table of Contents**
 
 - [**Overview**](#overview)
 - [**Features**](#features)
