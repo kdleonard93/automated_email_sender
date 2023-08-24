@@ -1,3 +1,4 @@
 .env
 email_data.csv
+email_log.csv 
 venv/

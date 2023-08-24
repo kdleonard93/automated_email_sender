@@ -7,6 +7,7 @@ import schedule
 import time
 from os import environ
 from dotenv import load_dotenv
+import datetime
 
 load_dotenv()  # This will load environment variables from a .env file.
 
@@ -29,6 +30,13 @@ def read_email_data(filename="email_data.csv"):
     return email_data
 
 
+def log_email(recipient, subject):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open("email_log.csv", "a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([recipient, subject, timestamp])
+
+
 def send_email(email_data, sender_email=SENDER_EMAIL):
     # Create email headers and body
     message = MIMEMultipart()
@@ -46,6 +54,7 @@ def send_email(email_data, sender_email=SENDER_EMAIL):
         server.login(sender_email, PASSWORD)
         server.sendmail(
             sender_email, email_data["recipient_email"], message.as_string())
+        log_email(email_data["recipient_email"], email_data["subject"])
     except Exception as e:
         print(f"An error occurred while sending the email: {e}")
     finally:
