@@ -72,9 +72,28 @@ def job():
     send_multi_emails()
 
 
-def email_schedule(interval):
+def email_schedule(interval_seconds):
     """Schedules the email sending job."""
-    schedule.every(interval).minutes.do(job)
+    if interval_seconds % 60 == 0:
+        print(f"Email job scheduled to run every {interval_seconds // 60} minute(s).")
+    else:
+        print(f"Email job scheduled to run every {interval_seconds} seconds.")
+
+    schedule.every(interval_seconds).seconds.do(job)
+
     while True:
+        # Check the time until the next scheduled job
+        next_run = schedule.next_run()
+        now = datetime.datetime.now()
+        time_until_next = (next_run - now).total_seconds()
+
+        # Print the message showing the next run time
+        print(f"Next email job scheduled at {next_run.strftime('%Y-%m-%d %H:%M:%S')}.")
+        print(f"Sleeping for {time_until_next:.0f} seconds...")
+
+        while time_until_next > 0:
+            sleep_interval = min(time_until_next, 5) 
+            time.sleep(sleep_interval)
+            time_until_next -= sleep_interval
+
         schedule.run_pending()
-        time.sleep(1)

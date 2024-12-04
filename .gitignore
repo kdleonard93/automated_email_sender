@@ -2,3 +2,4 @@
 email_data.csv
 email_log.csv 
 venv/
+__pycache__/
